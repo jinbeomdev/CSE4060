@@ -11,12 +11,13 @@ Notes:
 Hint:
 GLM mat3 (You will learn easier way to make rotation matrices, later.)
 */
-
-#include <glfw3.h>
-#include <vec3.hpp>
-#include <mat3x3.hpp>
+#include "glfw_session.h"
 
 int main() {
-	glm::vec3 start_vec;
-	glm::mat3 rotation_mat;
+	GLFWSession glfw_session;
+	
+	glfw_session.Init(640, 420);
+	glfw_session.Draw();
+
+	return 0;
 }
