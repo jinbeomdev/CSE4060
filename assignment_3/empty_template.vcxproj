@@ -130,6 +130,7 @@
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="glfw_session.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="simple_math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clock.h" />
