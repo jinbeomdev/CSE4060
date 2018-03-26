@@ -1,4 +1,5 @@
 #include "glfw_session.h"
+#include "clock.h"
 
 int GLFWSession::Init(int width_window, int height_window) {
 
@@ -37,11 +38,8 @@ void GLFWSession::Draw() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//TODO: draw here
-		glPointSize(20.0f);
-		glBegin(GL_POINTS);
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glEnd();
+		Clock clock(1.0f, 0.8f, 0.9f, 1.0f);
+		clock.DrawClock();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(windows_);
