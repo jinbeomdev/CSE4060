@@ -13,10 +13,17 @@ Clock::Clock(float clock_face_radius, float hour_hand_radius,
 }
 
 void Clock::DrawClock() {
+	std::time_t time = std::time(0);
+	time_ = std::localtime(&time);
+
+	hour_hand_degree_ = 90 - abs(time_->tm_hour - 12) * 360 / 12;
+	minute_hand_degree_ = 90 - (time_->tm_min * 360 / 60);
+	second_hand_degree_ = 90 - (time_->tm_sec * 360 / 60);
+
 	DrawClockFace();
-	DrawHourHand();
-	DrawMinuteHand();
 	DrawSecondHand();
+	DrawMinuteHand();
+	DrawHourHand();
 }
 
 void Clock::DrawClockFace() {
@@ -30,7 +37,7 @@ void Clock::DrawHourHand() {
 	glm::vec3 end_point = { hour_hand_radius_, 0.0f, 0.0f };
 
 	end_point = 
-		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, -90)) * end_point;
+		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, hour_hand_degree_)) * end_point;
 
 	glm::vec3 direction_vector = end_point - start_point;
 	
@@ -44,7 +51,7 @@ void Clock::DrawMinuteHand() {
 	glm::vec3 end_point = { minute_hand_radius_, 0.0f, 0.0f };
 
 	end_point =
-		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, -30)) * end_point;
+		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, minute_hand_degree_)) * end_point;
 
 	glm::vec3 direction_vector = end_point - start_point;
 
@@ -58,7 +65,7 @@ void Clock::DrawSecondHand() {
 	glm::vec3 end_point = { second_hand_radius_, 0.0f, 0.0f };
 
 	end_point =
-		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, -180)) * end_point;
+		glm::transpose(SimpleMath::GetMat3RotationMatrix(end_point, second_hand_degree_)) * end_point;
 
 	glm::vec3 direction_vector = end_point - start_point;
 
@@ -82,10 +89,9 @@ void Clock::DrawCircle(float radius) {
 
 	glBegin(GL_POINTS);
 	for (float degree = -180.0f; degree <= 180.0f; degree += 1.0f / 256.0f) {
-		float radian = SimpleMath::Degree2Radian(degree);
-
+		
 		glm::mat3 rotation_matrix =
-			glm::transpose(SimpleMath::GetMat3RotationMatrix(start_point, radian));
+			glm::transpose(SimpleMath::GetMat3RotationMatrix(start_point, degree));
 		glm::vec3 point = rotation_matrix * start_point;
 
 		glVertex3f(point.x, point.y, point.z);
