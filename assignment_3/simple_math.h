@@ -9,7 +9,7 @@
 struct SimpleMath {
 public:
 	static float Degree2Radian(float degree);
-	static glm::mat3 GetMat3RotationMatrix(glm::vec3 point, float radian);
+	static glm::mat3 GetMat3RotationMatrix(glm::vec3 point, float degree);
 };
 
 #endif // !SIMPLE_MATH_H_
