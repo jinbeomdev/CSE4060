@@ -9,28 +9,33 @@
 #include "simple_math.h"
 #include <vector>
 
-class planet {
+class Planet {
 public:
-	planet(float radius);
+	Planet(float radius, float distance,
+		     float revolution_degree, float rotation_degree,
+		     float r, float g, float b);
 	void DrawPlanet();
-	void SetColor(float r, float g, float b);
-	void SetRotationDegree(float degree);
-	void SetTranslateVector(glm::vec3);
-	void SetMoon(planet &moon);
+	void AddMoon(Planet &moon);
 
 private:
 	float radius_;
-	std::vector<glm::vec3> vertices_;
-
+	float distance_;
+	float revolution_degree_;
+	float current_revolution_degree_;
 	float rotation_degree_;
 	float current_rotation_degree_;
 
+	std::vector<glm::vec3> vertices_;
+
+	/* color */
 	float r_;
 	float g_;
 	float b_;
 
-	glm::vec3 translate_vector_;
+	/* moons */
+	std::vector<Planet> moons_;
 
+	/* functions */
 	void SetVertice();
 };
 

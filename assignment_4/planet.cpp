@@ -1,32 +1,49 @@
 #include "planet.h"
 
-planet::planet(const float radius) {
+Planet::Planet(float radius, float distance,
+	             float revolution_degree, float rotation_degree,
+	             float r, float g, float b) {
 	radius_ = radius;
-	rotation_degree_ = 0.0f;
+	distance_ = distance;
+	revolution_degree_ = revolution_degree;
+	current_revolution_degree_ = 0.0f;
+	rotation_degree_ = rotation_degree;
 	current_rotation_degree_ = 0.0f;
+
+	r_ = r;
+	g_ = g;
+	b_ = b;
 
 	SetVertice();
 }
 
-void planet::DrawPlanet() {
-	current_rotation_degree_ = (current_rotation_degree_ + rotation_degree_);
-
+void Planet::DrawPlanet() {
+	current_rotation_degree_ += rotation_degree_;
+	current_revolution_degree_ += revolution_degree_;
 	glColor3f(r_, g_, b_);
 
-	glPushMatrix();
-	glTranslatef(translate_vector_.x, translate_vector_.y, translate_vector_.z);
-	glRotatef(current_rotation_degree_, 0.0f, 0.0f, 1.0f);
+	glPushMatrix(); // 1
+	glTranslatef(distance_, 0.0f, 0.0f);
+	glRotatef(current_revolution_degree_, 0.0f, 0.0f, 1.0f);
 	
+	/* Redering Planet */
+	glPushMatrix(); // 2
+	glRotatef(current_rotation_degree_, 0.0f, 0.0f, 1.0f);
 	glBegin(GL_TRIANGLE_FAN);
 	for (glm::vec3 vertex : vertices_) {
 		glVertex3f(vertex.x, vertex.y, vertex.z);
 	}
 	glEnd();
+	glPopMatrix(); // -2
 
-	glPopMatrix();
+	/* Redering moons */
+	for (Planet &moon : moons_) {
+		moon.DrawPlanet();
+	}
+	glPopMatrix(); // -1
 }
 
-void planet::SetVertice() {
+void Planet::SetVertice() {
 	const glm::vec3 start_point = { radius_, 0.0f, 0.0f };
 
 	vertices_.push_back(glm::vec3(0.0f, 0.0f, 0.0f)); //center point of the planet
@@ -39,14 +56,6 @@ void planet::SetVertice() {
 	}
 }
 
-void planet::SetColor(float r, float g, float b) {
-	r_ = r; g_ = g; b_ = b;
-}
-
-void planet::SetRotationDegree(float degree) {
-	rotation_degree_ = degree;
-}
-
-void planet::SetTranslateVector(glm::vec3 translate_vector) {
-	translate_vector_ = translate_vector;
+void Planet::AddMoon(Planet &moon) {
+	moons_.push_back(moon);
 }

@@ -16,24 +16,16 @@ You do not have to calculate it perfectly.
 
 int main() {
 	GLFWSession glfw_session;
-	std::vector<planet> planets;
+	std::vector<Planet> planets;
 
-	planet sun(0.6f);
-	sun.SetColor(1.0f, 0.0f, 0.0f);
-	sun.SetRotationDegree(10.0f);
+	Planet sun(0.5f, 0.0f, 20.0f, 10.0f, 1.0f, 0.0f, 0.0f);
+	Planet earth(0.3f, 0.5f, 20.0f, 20.0f, 0.0f, 0.0f, 1.0f);
+	Planet moon(0.2f, 0.2f, 0.0f, 30.0f, 1.0f, 1.0f, 0.0f);
+
+	earth.AddMoon(moon);
+	sun.AddMoon(earth);
+
 	planets.push_back(sun);
-
-	planet earth(0.4f);
-	earth.SetColor(0.0f, 0.0f, 1.0f);
-	earth.SetRotationDegree(20.0f);
-	earth.SetTranslateVector(glm::vec3(0.7f, 0.0f, 0.0f));
-	planets.push_back(earth);
-
-	planet moon(0.3f);
-	moon.SetColor(1.0f, 1.0f, 0.0f);
-	moon.SetRotationDegree(30.0f);
-	moon.SetTranslateVector(glm::vec3(0.4f, 0.0f ,0.0f));
-	planets.push_back(moon);
 
 	glfw_session.Init(640, 420, "assignment_4");
 	glfw_session.Draw(planets);

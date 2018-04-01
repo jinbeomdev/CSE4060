@@ -12,7 +12,7 @@
 class GLFWSession {
 public:
 	int Init(const int width_window, const int height_window, const std::string window_name);
-	void Draw(std::vector<planet> &objects);
+	void Draw(std::vector<Planet> &objects);
 
 private:
 	GLFWwindow *windows_ = nullptr;
