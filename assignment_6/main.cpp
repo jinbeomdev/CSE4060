@@ -88,7 +88,7 @@ int main(void)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	
-	window = glfwCreateWindow(1024, 726, "assignment 6", NULL, NULL);
+	window = glfwCreateWindow(1024, 726, "assignment 7", NULL, NULL);
 	
 	if (!window) {
 		glfwTerminate();
